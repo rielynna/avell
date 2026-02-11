@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Card 🎉</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Opening splash screen -->
+  <div class="opening-splash" id="openingSplash">
+    <img src="img/op.gif" alt="Opening">
+  </div>
+
+  <div class="book">
+
+    <!-- Halaman 1 -->
+    <div class="page active">
+      <img src="img/love.jpg" alt="Love" class="big-love">
+      <h1>💗 Avelrz 💗</h1>
+      <p>12 February 2026</p>
+    </div>
+
+    <!-- Halaman 2 -->
+    <div class="page">
+      <div class="image-row">
+        <img src="img/avel2.jpg" alt="Foto 1">
+        <img src="img/avel1.jpg" alt="Foto 2">
+        <img src="img/avel2.jpg" alt="Foto 3">
+      </div>
+      <h1>🎉Happy Birthday Gemes🎉</h1>
+      <p>smoga panjang umur, dilancarkan urusan & kerjaanya yaw</p>
+      <p>smoga ga skit”an mulu, pola mam nya dijaga, dasarr</p>
+      <p>wuatb nak kecik, iell syng avell mwaah</p>
+    </div>
+
+    <!-- Halaman 3 -->
+    <div class="page">
+      <h2>'lohaa, ka avel'</h2>
+      <p>makasi uda suka n syng sm ak</p>
+      <p>jjur, ak pikir km cm brcanda aj awalnya</p>
+      <p>krn km bilng dlu km prnah suka jd ak pkir skrng uda brubah</p>
+      <p>oiya, sblumnya mff yaa, kl kdng ak bkin km kesel, bete sm sdihh</p>
+    </div>
+
+    <!-- Halaman 4 -->
+    <div class="page">
+      <h2>🎁special gifts🎁</h2>
+      <p>from iell to avell :p</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+        <button class="popup-btn" onclick="openPopup1()">🎟️, claim ticket; pat head</button>
+        <button class="popup-btn" onclick="openPopup2()">🎟️, claim ticket; warm hug</button>
+        <button class="popup-btn" onclick="openPopup3()">🎟️, claim ticket; lil kiss</button>
+      </div>
+      
+      <!-- Pop-up buttons (popups moved outside .book to keep page layout consistent) -->
+    </div>
+
+    <!-- Halaman 5 -->
+    <div class="page">
+      <h2>💌P.S.💌</h2>
+      <p>"among thousand(s) of people, i'll find u :p"</p>
+      <p>krna km sring nnya ak syng gk sm km, jdi i made this</p>
+      <p>ak syng kok sm km, ntah km prcaya atau gk tp itu fktanya</p>
+      <p>ak gk trbiasa sm yg romance”gt jjur, tp kl sm km yawda gppa</p>
+      <p>uhm, hope u like this birthday card from me, i love u sayangkuu</p>
+    </div>
+
+    <!-- Tombol Navigasi -->
+    <div class="nav-buttons">
+      <button id="prevBtn">⬅ Prev</button>
+      <button id="nextBtn">Next ➡</button>
+    </div>
+
+  </div>
+  
+  <!-- Tombol audio di bawah buku -->
+  <div class="audio-controls">
+    <audio id="birthdaySong" loop>
+      <source src="song/Heavenly.mp3" type="audio/mpeg">
+    </audio>
+    <div style="margin-bottom: 5px;">
+      <strong>🎵 Now Playing:</strong> <span id="songTitle">Heavenly</span>
+    </div>
+    <button onclick="playSong()">▶️ Play</button>
+    <button onclick="pauseSong()">⏸️ Pause</button>
+    <button onclick="nextSong()">🔁 Ganti Lagu</button>
+  </div>
+
+  <!-- Pop-up 1 (global) -->
+  <div class="popup" id="popup1">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup1()">✖</span>
+      <h2>yippie dapet pat pat🥳</h2>
+      <img src="img/pat.gif" alt="Hadiah Pat">
+      <p>i'll pat ur head, until u fall asleep</p>
+    </div>
+  </div>
+
+  <!-- Pop-up 2 (global) -->
+  <div class="popup" id="popup2">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup2()">✖</span>
+      <h2>yippie dapet hugg🫂</h2>
+      <img src="img/hug.gif" alt="Hadiah Hug">
+      <p>i'll hug u when u're tired of everything</p>
+    </div>
+  </div>
+
+  <!-- Pop-up 3 (global) -->
+  <div class="popup" id="popup3">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup3()">✖</span>
+      <h2>yippie dapet k!ss :c</h2>
+      <img src="img/kiss.gif" alt="Hadiah Kiss">
+      <p>a lil appreciation for u, hhe!</p>
+    </div>
+  </div>
+
+  <script>
+    // ===== NAVIGASI HALAMAN =====
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.page');
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        page.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextPage() {
+      currentPage = (currentPage + 1) % pages.length;
+      showPage(currentPage);
+    }
+
+    function prevPage() {
+      currentPage = (currentPage - 1 + pages.length) % pages.length;
+      showPage(currentPage);
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', nextPage);
+    document.getElementById('prevBtn').addEventListener('click', prevPage);
+
+    showPage(currentPage);
+
+    // ===== AUDIO PLAYLIST =====
+    const songs = [
+      { src: 'song/Heavenly.mp3', title: 'Heavenly' },
+      { src: 'song/IWBY.mp3', title: 'I Wanna Be Yours' }
+    ];
+    let currentSong = 0;
+    const audio = document.getElementById('birthdaySong');
+    const songTitle = document.getElementById('songTitle');
+
+    function playSong() { audio.play(); }
+    function pauseSong() { audio.pause(); }
+    function nextSong() {
+      currentSong = (currentSong + 1) % songs.length;
+      audio.src = songs[currentSong].src;
+      songTitle.textContent = songs[currentSong].title;
+      audio.play();
+    }
+    songTitle.textContent = songs[currentSong].title;
+
+    // ===== POP-UP HALAMAN 4 =====
+    const popup1 = document.getElementById('popup1');
+    const popup2 = document.getElementById('popup2');
+    const popup3 = document.getElementById('popup3');
+    function openPopup1() {
+      popup1.style.display = 'flex';
+      popup1.querySelector('.popup-content').classList.add('popup-animate');
+    }
+    function closePopup1() {
+      popup1.style.display = 'none';
+      popup1.querySelector('.popup-content').classList.remove('popup-animate');
+    }
+    
+    function openPopup2() {
+      popup2.style.display = 'flex';
+      popup2.querySelector('.popup-content').classList.add('popup-animate');
+    }
+    function closePopup2() {
+      popup2.style.display = 'none';
+      popup2.querySelector('.popup-content').classList.remove('popup-animate');
+    }
+    
+    function openPopup3() {
+      popup3.style.display = 'flex';
+      popup3.querySelector('.popup-content').classList.add('popup-animate');
+    }
+    function closePopup3() {
+      popup3.style.display = 'none';
+      popup3.querySelector('.popup-content').classList.remove('popup-animate');
+    }
+
+    // klik di luar popup tetap bisa menutup (klik pada overlay `.popup`)
+    window.addEventListener('click', function(event) {
+      const target = event.target;
+      if (target.classList && target.classList.contains('popup')) {
+        target.style.display = 'none';
+        const content = target.querySelector('.popup-content');
+        if (content) content.classList.remove('popup-animate');
+      }
+    });
+
+    // ===== OPENING SPLASH FADE-OUT =====
+    window.addEventListener('load', function() {
+      const splash = document.getElementById('openingSplash');
+      const book = document.querySelector('.book');
+      // Fade out after 3 seconds (adjust timing as needed)
+      setTimeout(function() {
+        splash.classList.add('fade-out');
+        book.classList.add('show');
+      }, 3000);
+    });
+
+  </script>
+</body>
+</html>
