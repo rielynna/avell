@@ -10,7 +10,11 @@
 
   <!-- Opening splash screen -->
   <div class="opening-splash" id="openingSplash">
-    <img src="img/op.gif" alt="Opening">
+    <div class="splash-content">
+      <img src="img/op.gif" alt="Opening">
+      <button id="playBtn" class="play-btn" style="display: none;">▶️ Play</button>
+      <p id="pressMsg" class="press-msg" style="display: none;">press anywhere</p>
+    </div>
   </div>
 
   <div class="book">
@@ -208,11 +212,48 @@
     window.addEventListener('load', function() {
       const splash = document.getElementById('openingSplash');
       const book = document.querySelector('.book');
-      // Fade out after 3 seconds (adjust timing as needed)
+      const playBtn = document.getElementById('playBtn');
+
+      // Start preloading the background so it appears immediately when splash removed
+      const bgPreload = new Image();
+      bgPreload.src = 'img/bg.jpg';
+
+      // Show play button after 3 seconds
       setTimeout(function() {
-        splash.classList.add('fade-out');
-        book.classList.add('show');
+        if (playBtn) playBtn.style.display = 'block';
       }, 3000);
+
+      // Helper to remove splash after fade completes
+      function removeSplashWhenReady() {
+        // Wait for the CSS opacity transition to finish, then remove element
+        const onTransitionEnd = function(e) {
+          if (e.propertyName === 'opacity') {
+            splash.removeEventListener('transitionend', onTransitionEnd);
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+          }
+        };
+        splash.addEventListener('transitionend', onTransitionEnd);
+      }
+
+      // Click play button to fade out splash and show book
+      if (playBtn) {
+        playBtn.addEventListener('click', function() {
+          playBtn.style.display = 'none'; // Hide play button
+          const pressMsg = document.getElementById('pressMsg');
+          if (pressMsg) pressMsg.style.display = 'block'; // Show press anywhere message
+          
+          splash.classList.add('fade-out');
+          book.classList.add('show');
+          removeSplashWhenReady();
+        });
+      } else {
+        // If no play button (fallback), auto-fade after 3s
+        setTimeout(function() {
+          splash.classList.add('fade-out');
+          book.classList.add('show');
+          removeSplashWhenReady();
+        }, 3000);
+      }
     });
 
   </script>

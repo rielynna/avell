@@ -41,7 +41,7 @@ body::after {
 .opening-splash {
   position: fixed;
   inset: 0;
-  background: #000000;
+  background-color: #000000; /* fallback color */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,11 +81,11 @@ body::after {
   position: relative;
   z-index: 1;
   border: 2px solid #ffffff;
-  opacity: 0;
+  opacity: 1;
 }
 
 .book.show {
-  animation: fadeIn 0.5s ease-in forwards;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 @keyframes fadeIn {
